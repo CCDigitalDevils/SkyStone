@@ -274,10 +274,10 @@ public class Strafe extends OpMode {
             flipOpen = STATE.OFF;
         }
 
-        if (gamepad1.dpad_down && capMove == STATE.OFF) {
+        if (gamepad1.a && capMove == STATE.OFF) {
             capMove = STATE.INPROGRESS;
         }
-        else if (!gamepad1.dpad_down && capMove == STATE.INPROGRESS){
+        else if (!gamepad1.a && capMove == STATE.INPROGRESS){
             robot.capArm.setPosition(.5);
 
             try {
