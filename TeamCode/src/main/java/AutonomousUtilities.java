@@ -60,7 +60,7 @@ public class AutonomousUtilities {
         strafeTime(speed, angle, time);
     }
 
-    public void clawOpen() {
+    public void doubleOpen() {
         runtime.reset();
         while (linearOpMode.opModeIsActive() && (runtime.seconds() < .5)) {
             robot.clawServo.setPosition(robot.MID_SERVO);
@@ -68,10 +68,40 @@ public class AutonomousUtilities {
         }
     }
 
+    public void doubleClosed() {
+        runtime.reset();
+        while (linearOpMode.opModeIsActive() && (runtime.seconds() < .5)) {
+            robot.clawServo.setPosition(robot.SERVO_CLOSED);
+            robot.flipServo.setPosition(0);
+        }
+
+    }
+
+    public void clawOpen() {
+        runtime.reset();
+        while (linearOpMode.opModeIsActive() && (runtime.seconds() < .5)) {
+            robot.clawServo.setPosition(robot.MID_SERVO);
+        }
+    }
+
     public void clawClosed() {
         runtime.reset();
         while (linearOpMode.opModeIsActive() && (runtime.seconds() < .5)) {
             robot.clawServo.setPosition(robot.SERVO_CLOSED);
+        }
+
+    }
+
+    public void extOpen() {
+        runtime.reset();
+        while (linearOpMode.opModeIsActive() && (runtime.seconds() < .5)) {
+            robot.flipServo.setPosition(1);
+        }
+    }
+
+    public void extClosed() {
+        runtime.reset();
+        while (linearOpMode.opModeIsActive() && (runtime.seconds() < .5)) {
             robot.flipServo.setPosition(0);
         }
 
@@ -164,6 +194,11 @@ public class AutonomousUtilities {
         robot.clawServo.setPosition(robot.SERVO_CLOSED);
         robot.armServo.setPosition(.625);
         robot.flipServo.setPosition(1);
+    }
+
+    public void armOut(){
+        robot.armServo.setPosition(.3);
+        robot.clawServo.setPosition(0);
     }
 
     public void extend(){

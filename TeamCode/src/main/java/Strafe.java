@@ -68,8 +68,11 @@ public class Strafe extends OpMode {
     STATE flipClosed = STATE.OFF;
     STATE flipOpen = STATE.OFF;
     STATE capMove = STATE.OFF;
+    STATE armPosition = STATE.MID;
+    STATE armMoveL = STATE.OFF;
+    STATE armMoveR = STATE.OFF;
 
-    private double Gear = 0.75;
+    private double Gear = 0.6;
     private static final Double GearChange = .05;
     private double offset = 0;
     private double drive1;
@@ -97,30 +100,22 @@ public class Strafe extends OpMode {
     private double dragoffset = .4;
     private double extOffset = .02;
     private double flipOffset = 1;
-    private ElapsedTime     runtime = new ElapsedTime();
-
-    AutonomousUtilities au;
-
     //set up all variables
 
     @Override
     public void init() {
         robot.init(hardwareMap);
-        Gear = 0.75;
-        offset = 0.0;
 
         robot.clawServo.setPosition(robot.MID_SERVO);
         robot.armServo.setPosition(.30);
 
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Ready");
+        telemetry.addData("", "Ready");
     }
 
     @Override
     public void loop() {
-      //activate variables
-       //grab values from cotroller
         drive1 = -gamepad1.left_stick_y;
         strafe1 = gamepad1.left_stick_x;
         turn1 = gamepad1.right_stick_x;
@@ -153,7 +148,6 @@ public class Strafe extends OpMode {
         }
         Gear = Range.clip(Gear, 0.5, 1.0);
 
-        //combine drive and turn for blended motion
         lR1 = ((-strafe1 + drive1) + turn1) * Gear;
         rR1 = ((strafe1 + drive1) - turn1) * Gear;
         lF1 = ((strafe1 + drive1) + turn1) * Gear;
@@ -194,15 +188,12 @@ public class Strafe extends OpMode {
         robot.Drive3.setPower(rR);
         robot.Drive4.setPower(lift*.6);
 
-        if (gamepad2.right_bumper){
-            armOffset -= .001;
-        }
-        else if (gamepad2.left_bumper){
-            armOffset += .001;
-        }
-        else if (gamepad2.y){
+
+        if (gamepad2.y){
             armOffset = .30;
+            armPosition = STATE.MID;
             flipOffset = 1;
+            flipstatus = STATE.CLOSED;
         }
         armOffset = Range.clip(armOffset, 0, .6);
 
@@ -240,20 +231,20 @@ public class Strafe extends OpMode {
             dragUp = STATE.OFF;
         }
 
-        if (gamepad2.dpad_down && extstatus == STATE.OPEN && extClosed == STATE.OFF) {
+        if (gamepad2.dpad_down && extstatus == STATE.CLOSED && extClosed == STATE.OFF) {
             extClosed = STATE.INPROGRESS;
         }
-        else if (!gamepad2.dpad_down && extstatus == STATE.OPEN && extClosed == STATE.INPROGRESS){
+        else if (!gamepad2.dpad_down && extstatus == STATE.CLOSED && extClosed == STATE.INPROGRESS){
             extOffset = .8;
-            extstatus = STATE.CLOSED;
+            extstatus = STATE.OPEN;
             extClosed = STATE.OFF;
         }
-        if (gamepad2.dpad_down && extstatus == STATE.CLOSED && extOpen == STATE.OFF){
+        if (gamepad2.dpad_down && extstatus == STATE.OPEN && extOpen == STATE.OFF){
             extOpen = STATE.INPROGRESS;
         }
-        else if (!gamepad2.dpad_down && extstatus == STATE.CLOSED && extOpen == STATE.INPROGRESS){
-            extOffset = .0;
-            extstatus = STATE.OPEN;
+        else if (!gamepad2.dpad_down && extstatus == STATE.OPEN && extOpen == STATE.INPROGRESS){
+            extOffset = .02;
+            extstatus = STATE.CLOSED;
             extOpen = STATE.OFF;
         }
 
@@ -274,10 +265,37 @@ public class Strafe extends OpMode {
             flipOpen = STATE.OFF;
         }
 
-        if (gamepad1.a && capMove == STATE.OFF) {
+        if(gamepad2.left_bumper && (armPosition == STATE.RIGHT || armPosition == STATE.MID) && armMoveL == STATE.OFF){
+            armMoveL = STATE.INPROGRESS;
+        }
+        else if (!gamepad2.left_bumper && armPosition == STATE.RIGHT && armMoveL == STATE.INPROGRESS){
+            armOffset = .30;
+            armPosition = STATE.MID;
+            armMoveL = STATE.OFF;
+        }
+        else if (!gamepad2.left_bumper && armPosition == STATE.MID && armMoveL == STATE.INPROGRESS){
+            armOffset = .625;
+            armPosition = STATE.LEFT;
+            armMoveL = STATE.OFF;
+        }
+        if(gamepad2.right_bumper && (armPosition == STATE.LEFT || armPosition == STATE.MID) && armMoveR == STATE.OFF){
+            armMoveR = STATE.INPROGRESS;
+        }
+        else if (!gamepad2.right_bumper && armPosition == STATE.LEFT && armMoveR == STATE.INPROGRESS){
+            armOffset = .3;
+            armPosition = STATE.MID;
+            armMoveR = STATE.OFF;
+        }
+        else if (!gamepad2.right_bumper && armPosition == STATE.MID && armMoveR == STATE.INPROGRESS){
+            armOffset = .0;
+            armPosition = STATE.RIGHT;
+            armMoveR = STATE.OFF;
+        }
+
+        if (gamepad1.b && capMove == STATE.OFF) {
             capMove = STATE.INPROGRESS;
         }
-        else if (!gamepad1.a && capMove == STATE.INPROGRESS){
+        else if (!gamepad1.b && capMove == STATE.INPROGRESS){
             robot.capArm.setPosition(.5);
 
             try {
