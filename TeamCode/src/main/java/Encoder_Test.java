@@ -53,7 +53,7 @@ import java.text.SimpleDateFormat;
  */
 
 @TeleOp(name="Encoder test", group="Strafebot")
-//@Disabled
+@Disabled
 public class Encoder_Test extends OpMode {
 
     /* Declare OpMode members. */

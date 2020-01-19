@@ -106,7 +106,7 @@ public class AutoRedBlockSide extends LinearOpMode {
         ae.encoderDrive(.5,9);
         au.liftTime(.5, down, .25);
         au.extOpen();
-        ae.encoderDrive(-.5,-2);
+        ae.encoderDrive(-.5,-5);
         au.armReset();
         au.pause(.5);
         au.liftDown();
@@ -116,10 +116,10 @@ public class AutoRedBlockSide extends LinearOpMode {
         au.armOut();
         gu.gyroTurn(.5,0);
         gu.gyroTurn(.5,0);
-        ae.encoderDrive(.5,5);
+        ae.encoderDrive(.5,10);
         au.extClosed();
         au.pause(.5);
-        ae.encoderDrive(-.5,-2);
+        ae.encoderDrive(-.5,-5);
         gu.gyroTurn(.5,-90);
         gu.gyroTurn(.5,-90);
         ae.encoderDrive(1,90);

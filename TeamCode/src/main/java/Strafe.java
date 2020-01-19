@@ -98,7 +98,7 @@ public class Strafe extends OpMode {
     private double liftdown;
     private double armOffset = .30;
     private double dragoffset = .4;
-    private double extOffset = .02;
+    private double extOffset = .00;
     private double flipOffset = 1;
     //set up all variables
 
@@ -235,7 +235,7 @@ public class Strafe extends OpMode {
             extClosed = STATE.INPROGRESS;
         }
         else if (!gamepad2.dpad_down && extstatus == STATE.CLOSED && extClosed == STATE.INPROGRESS){
-            extOffset = .8;
+            extOffset = .78;
             extstatus = STATE.OPEN;
             extClosed = STATE.OFF;
         }
@@ -243,7 +243,7 @@ public class Strafe extends OpMode {
             extOpen = STATE.INPROGRESS;
         }
         else if (!gamepad2.dpad_down && extstatus == STATE.OPEN && extOpen == STATE.INPROGRESS){
-            extOffset = .02;
+            extOffset = .00;
             extstatus = STATE.CLOSED;
             extOpen = STATE.OFF;
         }
@@ -252,7 +252,7 @@ public class Strafe extends OpMode {
             flipClosed = STATE.INPROGRESS;
         }
         else if (!gamepad2.x && flipstatus == STATE.OPEN && flipClosed == STATE.INPROGRESS){
-            flipOffset = .25;
+            flipOffset = .28;
             flipstatus = STATE.CLOSED;
             flipClosed = STATE.OFF;
         }

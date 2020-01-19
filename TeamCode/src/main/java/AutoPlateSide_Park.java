@@ -61,6 +61,8 @@ public class AutoPlateSide_Park extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
     private AutonomousUtilities au;
+    private GyroUtilities gu;
+    private AutoEncoder ae;
     private STATE open = STATE.OPEN;
     private STATE closed = STATE.CLOSED;
     private STATE left = STATE.LEFT;
@@ -70,22 +72,21 @@ public class AutoPlateSide_Park extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-
         /*
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
         au = new AutonomousUtilities(robot, this, runtime);
-
+        gu = new GyroUtilities(robot, this, runtime);
+        ae = new AutoEncoder(robot,this,runtime);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        au.pause(0);
+        ae.encoderDrive(.5,38);
 
         robot.clawServo.setPosition(robot.MID_SERVO);
         robot.armServo.setPosition(.30);
-
-        au.pause(25);
-        au.strafeTime(.5,0,1);
-    }
+}
 }

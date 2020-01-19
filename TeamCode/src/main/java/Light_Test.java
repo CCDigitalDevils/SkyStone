@@ -27,6 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -51,7 +52,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  */
 
 @TeleOp(name="Light Test", group="Strafebot")
-//@Disabled
+@Disabled
 public class Light_Test extends OpMode {
 
     /* Declare OpMode members. */

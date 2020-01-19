@@ -149,7 +149,7 @@ public class HardwareStrafe
         clawServo.setPosition(SERVO_CLOSED);
         armServo.setPosition(.625);
         dragServo.setPosition(.4);
-        extensionServo.setPosition(.02);
+        extensionServo.setPosition(.00);
         flipServo.setPosition(1);
         capGrip.setPosition(.1);
         capArm.setPosition(0);

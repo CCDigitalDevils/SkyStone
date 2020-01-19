@@ -52,7 +52,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  */
 
 @TeleOp(name="Gyro Test", group="Strafebot")
-//@Disabled
+@Disabled
 public class Gyro_Test extends OpMode {
 
     /* Declare OpMode members. */
