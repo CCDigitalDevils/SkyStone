@@ -60,10 +60,9 @@ import ccdd.util.STATE;
   Comment by Jeremy To test github push
  */
 
-@Autonomous(name="Auto Blue, Blocks", group="Pushbot")
+@Autonomous(name="Auto Blue, Blocks"  , group="Blue")
 //@Disabled
 public class AutoBlueBlocks extends LinearOpMode {
-
     /* Declare OpMode members. */
     HardwareStrafeAuto         robot   = new HardwareStrafeAuto();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();

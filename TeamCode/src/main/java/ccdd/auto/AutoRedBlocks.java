@@ -57,7 +57,7 @@ import ccdd.util.STATE;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Red, Blocks", group="Pushbot")
+@Autonomous(name="Auto Red, Blocks", group="Red")
 //@Disabled
 public class AutoRedBlocks extends LinearOpMode {
 
