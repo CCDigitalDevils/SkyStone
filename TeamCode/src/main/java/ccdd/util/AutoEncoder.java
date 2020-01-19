@@ -1,7 +1,10 @@
+package ccdd.util;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
+
+import ccdd.TeleOp.HardwareStrafe;
 
 public class AutoEncoder {
     private HardwareStrafe robot;

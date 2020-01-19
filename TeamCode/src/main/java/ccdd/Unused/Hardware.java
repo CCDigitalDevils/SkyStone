@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
+package ccdd.Unused;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -48,31 +48,27 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class HardwarePushTest
+public class Hardware
 {
     /* Public OpMode members. */
     public DcMotor  Drive0   = null;
     public DcMotor  Drive1  = null;
-    //public DcMotor  leftArm     = null;
-    public Servo    leftServo    = null;
-    public Servo    rightServo   = null;
+    public Servo    armServo    = null;
 
     public static final double MID_SERVO       =  0 ;
-   // public static final double ARM_UP_POWER    =  0.45 ;
-   // public static final double ARM_DOWN_POWER  = -0.45 ;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public HardwarePushTest(){
+    public Hardware(){
 
     }
 
-    /* Initialize standard Hardware interfaces */
+    /* Initialize standard ccdd.Unused.Hardware interfaces */
     public void init(HardwareMap ahwMap) {
-        // Save reference to Hardware map
+        // Save reference to ccdd.Unused.Hardware map
         hwMap = ahwMap;
 
         // Define and Initialize Motors
@@ -94,10 +90,8 @@ public class HardwarePushTest
         //leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
          //Define and initialize ALL installed servos.
-        leftServo  = hwMap.get(Servo.class, "Servo_1");
-        rightServo = hwMap.get(Servo.class, "Servo_2");
-        leftServo.setPosition(MID_SERVO);
-        rightServo.setPosition(MID_SERVO);
+        armServo  = hwMap.get(Servo.class, "Servo_1");
+        armServo.setPosition(MID_SERVO);
     }
  }
 

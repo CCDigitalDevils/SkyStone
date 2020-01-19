@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
+package ccdd.auto;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -31,6 +31,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import ccdd.TeleOp.HardwareStrafe;
+import ccdd.util.AutoEncoder;
+import ccdd.util.AutonomousUtilities;
+import ccdd.util.GyroUtilities;
+import ccdd.util.STATE;
+
 /**
  * This file illustrates the concept of driving a path based on time.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -52,12 +58,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Park", group="Pushbot")
+@Autonomous(name="Auto Blue Plate Move", group="Blue")
 //@Disabled
-public class AutoPlateSide_Park extends LinearOpMode {
+public class AutoBluePlateMove extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareStrafe         robot   = new HardwareStrafe();   // Use a Pushbot's hardware
+    HardwareStrafe robot   = new HardwareStrafe();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
     private AutonomousUtilities au;
@@ -83,10 +89,17 @@ public class AutoPlateSide_Park extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.pause(0);
-        ae.encoderDrive(.5,38);
+        ae.encoderDrive(.75,35);
+        au.drag();
+        au.pause(.3);
+        ae.encoderDrive(-.75,-10);
+        gu.gyroTurn(.5,90);
+        gu.gyroTurn(.5,90);
+        ae.encoderDrive(1,20);
+        au.noDrag();
+        au.pause(.3);
+        au.strafeTime(1,-90,1);
+        ae.encoderDrive(-1,-60);
 
-        robot.clawServo.setPosition(robot.MID_SERVO);
-        robot.armServo.setPosition(.30);
-}
+    }
 }

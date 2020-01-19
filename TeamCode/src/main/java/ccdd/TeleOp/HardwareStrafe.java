@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
+package ccdd.TeleOp;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -89,9 +89,9 @@ public class HardwareStrafe
 
     }
 
-    /* Initialize standard Hardware interfaces */
+    /* Initialize standard ccdd.Unused.Hardware interfaces */
     public void init(HardwareMap ahwMap) {
-        // Save reference to Hardware map
+        // Save reference to ccdd.Unused.Hardware map
         hwMap = ahwMap;
 
         // Define and Initialize Motors

@@ -1,8 +1,10 @@
+package ccdd.util;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import static android.os.Looper.loop;
+import ccdd.TeleOp.HardwareStrafe;
 
 public class AutonomousUtilities {
     private HardwareStrafe robot;

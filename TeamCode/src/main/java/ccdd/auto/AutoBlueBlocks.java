@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
+package ccdd.auto;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -28,9 +28,13 @@
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import ccdd.util.AutoEncoder;
+import ccdd.util.AutonomousUtilities;
+import ccdd.util.GyroUtilities;
+import ccdd.util.STATE;
 
 /**
  * This file illustrates the concept of driving a path based on time.
@@ -52,18 +56,21 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
+/*
+  Comment by Jeremy To test github push
+ */
 
-@Autonomous(name="Auto Test", group="Pushbot")
-@Disabled
-public class AutoTest extends LinearOpMode {
+@Autonomous(name="Auto Blue, Blocks", group="Pushbot")
+//@Disabled
+public class AutoBlueBlocks extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareStrafeAuto         robot   = new HardwareStrafeAuto();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
     private AutonomousUtilities au;
-    private AutoEncoder ae;
     private GyroUtilities gu;
+    private AutoEncoder ae;
     private STATE open = STATE.OPEN;
     private STATE closed = STATE.CLOSED;
     private STATE left = STATE.LEFT;
@@ -80,18 +87,48 @@ public class AutoTest extends LinearOpMode {
          */
         robot.init(hardwareMap);
         au = new AutonomousUtilities(robot, this, runtime);
-        ae = new AutoEncoder(robot, this, runtime);
         gu = new GyroUtilities(robot, this, runtime);
+        ae = new AutoEncoder(robot,this,runtime);
 
-
-        // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-       gu.gyroTurn(.5,90);
-       au.pause(5);
-       gu.gyroTurn(.5,-90);
-       au.pause(5);
-       gu.gyroTurn(.5,0);
+        robot.clawServo.setPosition(robot.MID_SERVO);
+        robot.armServo.setPosition(.30);
+
+        ae.encoderDrive(.5,35);
+        au.extClosed();
+        au.pause(.5);
+        au.liftTime(.5, up, .1);
+        ae.encoderDrive(-.5, -1);
+        gu.gyroTurn(.5,90);
+        gu.gyroTurn(.5,90);
+        ae.encoderDrive(1,105);
+        au.liftTime(.5, up, 1);
+        gu.gyroTurn(.5,0);
+        gu.gyroTurn(.5,0);
+        ae.encoderDrive(.5,9);
+        au.liftTime(.5, down, .25);
+        au.extOpen();
+        ae.encoderDrive(-.5,-5);
+        au.armReset();
+        au.pause(.5);
+        au.liftDown();
+        gu.gyroTurn(.5,-90);
+        gu.gyroTurn(.5,-90);
+        ae.encoderDrive(1,118);
+        au.armOut();
+        gu.gyroTurn(.5,0);
+        gu.gyroTurn(.5,0);
+        ae.encoderDrive(.5,5);
+        au.extClosed();
+        au.pause(.5);
+        ae.encoderDrive(-.5,-2);
+        gu.gyroTurn(.5,90);
+        gu.gyroTurn(.5,90);
+        ae.encoderDrive(1,90);
+        au.extOpen();
+        au.pause(.1);
+        ae.encoderDrive(-1,-30);
 
 
     }

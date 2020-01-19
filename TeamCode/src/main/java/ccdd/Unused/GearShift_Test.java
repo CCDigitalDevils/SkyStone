@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
+package ccdd.Unused;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -46,9 +46,9 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Testbot: GearShift_2", group="Pushbot")
+@TeleOp(name="Testbot: GearShift", group="Pushbot")
 @Disabled
-public class GearShift_Test_2 extends LinearOpMode {
+public class GearShift_Test extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwarePushTest robot           = new HardwarePushTest();   // Use a Pushbot's hardware

@@ -1,5 +1,9 @@
+package ccdd.auto;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import ccdd.TeleOp.HardwareStrafe;
 
 public class HardwareStrafeAuto extends HardwareStrafe {
     @Override

@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
+package ccdd.Test;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -30,12 +30,9 @@
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import ccdd.TeleOp.HardwareStrafe;
+import ccdd.util.STATE;
 
 /**
  * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
@@ -51,9 +48,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Gyro Test", group="Strafebot")
+@TeleOp(name="Encoder test", group="Strafebot")
 @Disabled
-public class Gyro_Test extends OpMode {
+public class Encoder_Test extends OpMode {
 
     /* Declare OpMode members. */
     HardwareStrafe robot           = new HardwareStrafe();   // Use a Pushbot's hardware
@@ -75,17 +72,17 @@ public class Gyro_Test extends OpMode {
     @Override
     public void init() {
         robot.init(hardwareMap);
-
     }
 
     @Override
     public void loop() {
-        Orientation o = robot.imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-        telemetry.addData("x axis", o.firstAngle);
-        telemetry.addData("y axis", o.secondAngle);
-        telemetry.addData("z axis", o.thirdAngle);
-        telemetry.update();
-
-
+        double leftF = robot.Drive0.getCurrentPosition();
+      telemetry.addData("encoder, left front", "%.2f", leftF );
+        double rightF = robot.Drive1.getCurrentPosition();
+      telemetry.addData("encoder, right front", "%.2f", rightF );
+        double leftR = robot.Drive2.getCurrentPosition();
+      telemetry.addData("encoder, left rear", "%.2f", leftR );
+        double rightR = robot.Drive3.getCurrentPosition();
+      telemetry.addData("encoder, right rear", "%.2f", rightR );
     }
 }
