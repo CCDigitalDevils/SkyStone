@@ -30,6 +30,7 @@ package ccdd.TeleOp;/* Copyright (c) 2017 FIRST. All rights reserved.
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.hardware.rev.RevTouchSensor;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -66,10 +67,10 @@ public class HardwareStrafe
     public Servo clawServo = null;
     public Servo armServo = null;
     public Servo dragServo = null;
-    public Servo extensionServo = null;
     public Servo flipServo = null;
     public Servo capGrip = null;
     public Servo capArm = null;
+    public CRServo tape = null;
     public DigitalChannel bottomedSensor = null;
     public DigitalChannel maxxedSensor = null;
     public BNO055IMU imu = null;
@@ -102,8 +103,6 @@ public class HardwareStrafe
         Drive4 = hwMap.get(DcMotor.class, "drive4");
         bottomedSensor = hwMap.get(DigitalChannel.class, "touch0-1");
         maxxedSensor = hwMap.get(DigitalChannel.class, "touch2-3");
-        colorSensor = hwMap.get(ColorSensor.class, "colorsensor");
-        distanceSensor = hwMap.get(DistanceSensor.class, "colorsensor");
         Drive0.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         Drive1.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         Drive2.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
@@ -142,14 +141,14 @@ public class HardwareStrafe
         armServo = hwMap.get(Servo.class, "servo1-0");
         dragServo = hwMap.get(Servo.class, "servo1-2");
         flipServo = hwMap.get(Servo.class, "servo1-3");
-        extensionServo = hwMap.get(Servo.class, "servo2-0");
         capArm = hwMap.get(Servo.class, "servo1-4");
         capGrip = hwMap.get(Servo.class, "servo1-5");
+
+        tape = hwMap.get(CRServo.class, "servo2-5");
 
         clawServo.setPosition(SERVO_CLOSED);
         armServo.setPosition(.625);
         dragServo.setPosition(.4);
-        extensionServo.setPosition(.00);
         flipServo.setPosition(1);
         capGrip.setPosition(.1);
         capArm.setPosition(0);

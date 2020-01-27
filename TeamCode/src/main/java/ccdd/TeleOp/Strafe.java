@@ -51,8 +51,10 @@ import ccdd.util.STATE;
 //@Disabled
 public class Strafe extends OpMode {
 
-    /* Declare OpMode members. */
-    HardwareStrafe robot           = new HardwareStrafe();   // Use a Pushbot's hardware
+    //decalare the Hardware being used
+    HardwareStrafe robot           = new HardwareStrafe();
+
+    //define all STATE variables
     STATE incrementup   = STATE.OFF;
     STATE incrementdown = STATE.OFF;
     STATE clawstatus = STATE.OPEN;
@@ -61,17 +63,16 @@ public class Strafe extends OpMode {
     STATE dragStatus = STATE.UP;
     STATE dragDown = STATE.OFF;
     STATE dragUp = STATE.OFF;
-    STATE extstatus = STATE.CLOSED;
-    STATE extClosed = STATE.OFF;
-    STATE extOpen = STATE.OFF;
     STATE flipstatus = STATE.CLOSED;
     STATE flipClosed = STATE.OFF;
     STATE flipOpen = STATE.OFF;
     STATE capMove = STATE.OFF;
+    STATE capStatus = STATE.UP;
     STATE armPosition = STATE.MID;
     STATE armMoveL = STATE.OFF;
     STATE armMoveR = STATE.OFF;
 
+    //define all double variables
     private double Gear = 0.6;
     private static final Double GearChange = .05;
     private double offset = 0;
@@ -100,6 +101,7 @@ public class Strafe extends OpMode {
     private double dragoffset = .4;
     private double extOffset = .00;
     private double flipOffset = 1;
+    private double capPos = 0;
     //set up all variables
 
     @Override
@@ -116,17 +118,22 @@ public class Strafe extends OpMode {
 
     @Override
     public void loop() {
+        //Defines drive inputs for controller 1
         drive1 = -gamepad1.left_stick_y;
         strafe1 = gamepad1.left_stick_x;
         turn1 = gamepad1.right_stick_x;
 
+        //Defines drive inputs for controller 2
         drive2 = -gamepad2.left_stick_y;
         strafe2 = gamepad2.left_stick_x;
         turn2 = gamepad2.right_stick_x;
 
+        //defines lift inputs
         liftup = gamepad2.right_trigger;
         liftdown = gamepad2.left_trigger;
 
+        //used to change "Gear"
+        //Gear is the multiplier on the speed, used to limit max speed
         if(gamepad1.dpad_up && incrementup == STATE.OFF)
         {
             incrementup = STATE.INPROGRESS;
@@ -136,7 +143,6 @@ public class Strafe extends OpMode {
             Gear += GearChange;
             incrementup = STATE.OFF;
         }
-
         if(gamepad1.dpad_down && incrementdown == STATE.OFF)
         {
             incrementdown = STATE.INPROGRESS;
@@ -146,23 +152,30 @@ public class Strafe extends OpMode {
             Gear -= GearChange;
             incrementdown = STATE.OFF;
         }
+
+        //Makes sure that "Gear" is withing the defined range
         Gear = Range.clip(Gear, 0.5, 1.0);
 
+        //All movement calculations for controller 1
         lR1 = ((-strafe1 + drive1) + turn1) * Gear;
         rR1 = ((strafe1 + drive1) - turn1) * Gear;
         lF1 = ((strafe1 + drive1) + turn1) * Gear;
         rF1 = ((-strafe1 + drive1) - turn1) * Gear;
 
+        //All movement calculations for controller 2
         lR2 = ((-strafe2 + drive2) + turn2) * .20;
         rR2 = ((strafe2 + drive2) - turn2) * .20;
         lF2 = ((strafe2 + drive2) + turn2) * .20;
         rF2 = ((-strafe2 + drive2) - turn2) * .20;
 
+        //Combines controller 1 and controller 2 calculations for fluid transfer of controls
         lR = lR1 + lR2;
         rR = rR1 + rR2;
         lF = lF1 + lF2;
         rF = rF1 + rF2;
 
+        //limits the lift so that it can not go past the defined raised and lowered values
+        //makes sure that the pulley string remains on the pulley
         if(!robot.bottomedSensor.getState() == true){
             liftdown = 0;
             telemetry.addData("lift","is completely lowered" );
@@ -174,29 +187,35 @@ public class Strafe extends OpMode {
 
         }
 
+        //combines lift up and down to allow full control of lift movement
         lift = (liftup - liftdown*.5);
-        //Normalize values so neither exceed +/- 1.0
+
+        //makes sure all variables are within the defined range
         lR = Range.clip(lR, -1, 1);
         rR = Range.clip(rR, -1, 1);
         lF = Range.clip(lF, -1, 1);
         rF = Range.clip(rF, -1, 1);
         lift = Range.clip(lift, -1, 1);
 
+        //controls the "tape" servo, allowing it to move the tape measure on the robot
+        if (gamepad1.right_trigger>0){
+            robot.tape.setPower(1);
+        }
+        else if (gamepad1.left_trigger>0){
+            robot.tape.setPower(-1);
+        }
+        else if (gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0){
+            robot.tape.setPower(0);
+        }
+
+        //plugs in all movement values and tells the motors how fast to move
         robot.Drive0.setPower(lF);
         robot.Drive1.setPower(rF);
         robot.Drive2.setPower(lR);
         robot.Drive3.setPower(rR);
-        robot.Drive4.setPower(lift*.6);
+        robot.Drive4.setPower(lift);
 
-
-        if (gamepad2.y){
-            armOffset = .30;
-            armPosition = STATE.MID;
-            flipOffset = 1;
-            flipstatus = STATE.CLOSED;
-        }
-        armOffset = Range.clip(armOffset, 0, .6);
-
+        //controls the smaller of the 2 grippers and allows it to open and close
         if (gamepad2.a && clawstatus == STATE.OPEN && clawClosed == STATE.OFF) {
             clawClosed = STATE.INPROGRESS;
         }
@@ -214,40 +233,7 @@ public class Strafe extends OpMode {
             clawOpen = STATE.OFF;
         }
 
-        if (gamepad2.b && dragStatus == STATE.UP && dragDown == STATE.OFF) {
-            dragDown = STATE.INPROGRESS;
-        }
-        else if (!gamepad2.b && dragStatus == STATE.UP && dragDown == STATE.INPROGRESS){
-            dragoffset = .4;
-            dragStatus = STATE.DOWN;
-            dragDown = STATE.OFF;
-        }
-        if (gamepad2.b && dragStatus == STATE.DOWN && dragUp == STATE.OFF){
-            dragUp = STATE.INPROGRESS;
-        }
-        else if (!gamepad2.b && dragStatus == STATE.DOWN && dragUp == STATE.INPROGRESS){
-            dragoffset = .025;
-            dragStatus = STATE.UP;
-            dragUp = STATE.OFF;
-        }
-
-        if (gamepad2.dpad_down && extstatus == STATE.CLOSED && extClosed == STATE.OFF) {
-            extClosed = STATE.INPROGRESS;
-        }
-        else if (!gamepad2.dpad_down && extstatus == STATE.CLOSED && extClosed == STATE.INPROGRESS){
-            extOffset = .78;
-            extstatus = STATE.OPEN;
-            extClosed = STATE.OFF;
-        }
-        if (gamepad2.dpad_down && extstatus == STATE.OPEN && extOpen == STATE.OFF){
-            extOpen = STATE.INPROGRESS;
-        }
-        else if (!gamepad2.dpad_down && extstatus == STATE.OPEN && extOpen == STATE.INPROGRESS){
-            extOffset = .00;
-            extstatus = STATE.CLOSED;
-            extOpen = STATE.OFF;
-        }
-
+        //controls the larger of the 2 grippers and allows it to open and close
         if (gamepad2.x && flipstatus == STATE.OPEN && flipClosed == STATE.OFF) {
             flipClosed = STATE.INPROGRESS;
         }
@@ -265,6 +251,7 @@ public class Strafe extends OpMode {
             flipOpen = STATE.OFF;
         }
 
+        //controls the orientation of the entire front mechanism and allows it to move left to right
         if(gamepad2.left_bumper && (armPosition == STATE.RIGHT || armPosition == STATE.MID) && armMoveL == STATE.OFF){
             armMoveL = STATE.INPROGRESS;
         }
@@ -292,6 +279,34 @@ public class Strafe extends OpMode {
             armMoveR = STATE.OFF;
         }
 
+        //resets the arm to its original, center position
+        //moves the longer of the 2 arms up and out of the way
+        if (gamepad2.y){
+            armOffset = .30;
+            armPosition = STATE.MID;
+            flipOffset = 1;
+            flipstatus = STATE.CLOSED;
+        }
+
+        //controls the 2 rotating plates at the front of the robot, allowing them to swing up or down
+        if (gamepad2.b && dragStatus == STATE.UP && dragDown == STATE.OFF) {
+            dragDown = STATE.INPROGRESS;
+        }
+        else if (!gamepad2.b && dragStatus == STATE.UP && dragDown == STATE.INPROGRESS){
+            dragoffset = .4;
+            dragStatus = STATE.DOWN;
+            dragDown = STATE.OFF;
+        }
+        if (gamepad2.b && dragStatus == STATE.DOWN && dragUp == STATE.OFF){
+            dragUp = STATE.INPROGRESS;
+        }
+        else if (!gamepad2.b && dragStatus == STATE.DOWN && dragUp == STATE.INPROGRESS){
+            dragoffset = .025;
+            dragStatus = STATE.UP;
+            dragUp = STATE.OFF;
+        }
+
+        //allows the arm and grip that hold the capstone to move down
         if (gamepad1.b && capMove == STATE.OFF) {
             capMove = STATE.INPROGRESS;
         }
@@ -324,13 +339,13 @@ public class Strafe extends OpMode {
             capMove = STATE.OFF;
         }
 
-
+        //plugs in all servo variables, moving them to their new position
         robot.clawServo.setPosition(offset);
         robot.armServo.setPosition(armOffset);
         robot.dragServo.setPosition(dragoffset);
-        robot.extensionServo.setPosition(extOffset);
         robot.flipServo.setPosition(flipOffset);
 
+        //gives feedback to the driver(s)
         telemetry.addData("leftF",  "%.2f", lF);
         telemetry.addData("leftR",  "%.2f", lR);
         telemetry.addData("rightF",  "%.2f", rR);

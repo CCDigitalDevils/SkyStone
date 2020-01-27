@@ -202,13 +202,5 @@ public class AutonomousUtilities {
         robot.armServo.setPosition(.3);
         robot.clawServo.setPosition(0);
     }
-
-    public void extend(){
-        robot.extensionServo.setPosition(.8);
-    }
-
-    public void noExtend(){
-        robot.extensionServo.setPosition(.02);
-    }
 }
 
