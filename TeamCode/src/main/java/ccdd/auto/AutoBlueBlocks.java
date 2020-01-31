@@ -36,6 +36,8 @@ import ccdd.util.AutonomousUtilities;
 import ccdd.util.GyroUtilities;
 import ccdd.util.STATE;
 
+import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
+
 /**
  * This file illustrates the concept of driving a path based on time.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -92,43 +94,42 @@ public class AutoBlueBlocks extends LinearOpMode {
         waitForStart();
 
         robot.clawServo.setPosition(robot.MID_SERVO);
-        robot.armServo.setPosition(.30);
+        robot.armServo.setPosition(.0);
 
-        ae.encoderDrive(.5,35);
+        ae.encoderDrive(.5,37);
         au.extClosed();
         au.pause(.5);
-        au.liftTime(.5, up, .1);
-        ae.encoderDrive(-.5, -1);
-        gu.gyroTurn(.5,90);
-        gu.gyroTurn(.5,90);
+        au.liftTime(.5, up, .2);
+        ae.encoderDrive(-.5, -3);
+        gu.gyroTurn(TURN_SPEED,90);
+        gu.gyroTurn(TURN_SPEED,90);
         ae.encoderDrive(1,105);
-        au.liftTime(.5, up, 1);
-        gu.gyroTurn(.5,0);
-        gu.gyroTurn(.5,0);
-        ae.encoderDrive(.5,9);
+        au.liftTime(.5, up, 1.5);
+        gu.gyroTurn(TURN_SPEED,0);
+        gu.gyroTurn(TURN_SPEED,0);
+        ae.encoderDrive(.5,11);
         au.liftTime(.5, down, .25);
         au.extOpen();
         ae.encoderDrive(-.5,-5);
         au.armReset();
         au.pause(.5);
         au.liftDown();
-        gu.gyroTurn(.5,-90);
-        gu.gyroTurn(.5,-90);
+        gu.gyroTurn(TURN_SPEED,-90);
+        gu.gyroTurn(TURN_SPEED,-90);
         ae.encoderDrive(1,118);
         au.armOut();
-        gu.gyroTurn(.5,0);
-        gu.gyroTurn(.5,0);
-        ae.encoderDrive(.5,5);
+        gu.gyroTurn(TURN_SPEED,0);
+        gu.gyroTurn(TURN_SPEED,0);
+        ae.encoderDrive(.5,10);
         au.extClosed();
         au.pause(.5);
         ae.encoderDrive(-.5,-2);
-        gu.gyroTurn(.5,90);
-        gu.gyroTurn(.5,90);
+        gu.gyroTurn(TURN_SPEED,90);
+        gu.gyroTurn(TURN_SPEED,90);
         ae.encoderDrive(1,90);
         au.extOpen();
         au.pause(.1);
         ae.encoderDrive(-1,-30);
-
 
     }
 }

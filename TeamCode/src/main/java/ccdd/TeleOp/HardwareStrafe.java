@@ -66,7 +66,8 @@ public class HardwareStrafe
     public DcMotor  Drive4 = null;
     public Servo clawServo = null;
     public Servo armServo = null;
-    public Servo dragServo = null;
+    public Servo dragServo1 = null;
+    public Servo dragServo2 = null;
     public Servo flipServo = null;
     public Servo capGrip = null;
     public Servo capArm = null;
@@ -80,6 +81,7 @@ public class HardwareStrafe
 
     public static final double MID_SERVO = 0 ;
     public static final double SERVO_CLOSED = .35;
+    public static final double TURN_SPEED = .5;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -139,16 +141,20 @@ public class HardwareStrafe
          //Define and initialize ALL installed servos.
         clawServo = hwMap.get(Servo.class, "servo1-1");
         armServo = hwMap.get(Servo.class, "servo1-0");
-        dragServo = hwMap.get(Servo.class, "servo1-2");
         flipServo = hwMap.get(Servo.class, "servo1-3");
         capArm = hwMap.get(Servo.class, "servo1-4");
         capGrip = hwMap.get(Servo.class, "servo1-5");
+        dragServo1 = hwMap.get(Servo.class, "servo2-3");
+        dragServo2 = hwMap.get(Servo.class,"servo2-4");
 
         tape = hwMap.get(CRServo.class, "servo2-5");
 
+        dragServo1.setDirection(Servo.Direction.REVERSE);
+
         clawServo.setPosition(SERVO_CLOSED);
-        armServo.setPosition(.625);
-        dragServo.setPosition(.4);
+        armServo.setPosition(.33);
+        dragServo1.setPosition(.0);
+        dragServo2.setPosition(.0);
         flipServo.setPosition(1);
         capGrip.setPosition(.1);
         capArm.setPosition(0);

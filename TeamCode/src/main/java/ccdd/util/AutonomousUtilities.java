@@ -185,21 +185,23 @@ public class AutonomousUtilities {
     }
 
     public void noDrag(){
-        robot.dragServo.setPosition(.4);
+        robot.dragServo1.setPosition(0);
+        robot.dragServo2.setPosition(0);
     }
 
     public void drag(){
-        robot.dragServo.setPosition(.025);
+        robot.dragServo1.setPosition(.75);
+        robot.dragServo2.setPosition(.75);
     }
 
     public void armReset(){
         robot.clawServo.setPosition(robot.SERVO_CLOSED);
-        robot.armServo.setPosition(.625);
+        robot.armServo.setPosition(.32);
         robot.flipServo.setPosition(1);
     }
 
     public void armOut(){
-        robot.armServo.setPosition(.3);
+        robot.armServo.setPosition(0);
         robot.clawServo.setPosition(0);
     }
 }

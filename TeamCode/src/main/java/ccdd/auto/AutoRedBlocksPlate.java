@@ -59,9 +59,9 @@ import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Red, Blocks", group="Red")
+@Autonomous(name="Auto Red, Blocks + Plate", group="Red")
 //@Disabled
-public class AutoRedBlocks extends LinearOpMode {
+public class AutoRedBlocksPlate extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareStrafeAuto         robot   = new HardwareStrafeAuto();   // Use a Pushbot's hardware
@@ -95,40 +95,33 @@ public class AutoRedBlocks extends LinearOpMode {
         robot.clawServo.setPosition(robot.MID_SERVO);
         robot.armServo.setPosition(.0);
 
-        ae.encoderDrive(.5,37);
+        ae.encoderDrive(.5,36);
         au.extClosed();
         au.pause(.5);
         au.liftTime(.5, up, .2);
-        ae.encoderDrive(-.5, -3);
+        ae.encoderDrive(-.5, -1);
         gu.gyroTurn(TURN_SPEED,-90);
         gu.gyroTurn(TURN_SPEED,-90);
         ae.encoderDrive(1,105);
         au.liftTime(.5, up, 1.5);
         gu.gyroTurn(TURN_SPEED,0);
         gu.gyroTurn(TURN_SPEED,0);
-        ae.encoderDrive(.5,11);
+        ae.encoderDrive(.5,9);
         au.liftTime(.5, down, .25);
         au.extOpen();
-        ae.encoderDrive(-.5,-5);
-        au.armReset();
-        au.pause(.5);
-        au.liftDown();
-        gu.gyroTurn(TURN_SPEED,90);
-        gu.gyroTurn(TURN_SPEED,90);
-        ae.encoderDrive(1,118);
-        au.armOut();
-        gu.gyroTurn(TURN_SPEED,0);
-        gu.gyroTurn(TURN_SPEED,0);
-        ae.encoderDrive(.5,10);
-        au.extClosed();
-        au.pause(.5);
-        ae.encoderDrive(-.5,-2);
+        au.liftTime(.5,up,1);
+        au.drag();
+        au.pause(.75);
+        ae.encoderDrive(-.75,-20);
         gu.gyroTurn(TURN_SPEED,-90);
         gu.gyroTurn(TURN_SPEED,-90);
-        ae.encoderDrive(1,90);
-        au.extOpen();
-        au.pause(.1);
-        ae.encoderDrive(-1,-30);
-
+        ae.encoderDrive(1,7);
+        au.noDrag();
+        au.pause(.5);
+        au.strafeTime(.75,90,1.5);
+        au.strafeTime(.75,-90,1);
+        gu.gyroTurn(TURN_SPEED,-90);
+        gu.gyroTurn(TURN_SPEED,-90);
+        ae.encoderDrive(-.5,-45);
     }
 }

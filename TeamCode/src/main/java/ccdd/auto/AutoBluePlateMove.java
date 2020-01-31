@@ -37,6 +37,8 @@ import ccdd.util.AutonomousUtilities;
 import ccdd.util.GyroUtilities;
 import ccdd.util.STATE;
 
+import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
+
 /**
  * This file illustrates the concept of driving a path based on time.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -89,17 +91,21 @@ public class AutoBluePlateMove extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        ae.encoderDrive(.75,35);
+        au.liftTime(.5, up, .1);
+        au.strafeTime(.5,-90,.75);
+        ae.encoderDrive(.25,40);
         au.drag();
-        au.pause(.3);
-        ae.encoderDrive(-.75,-10);
-        gu.gyroTurn(.5,90);
-        gu.gyroTurn(.5,90);
-        ae.encoderDrive(1,20);
+        au.pause(.75);
+        ae.encoderDrive(-.75,-15);
+        gu.gyroTurn(TURN_SPEED,90);
+        gu.gyroTurn(TURN_SPEED,90);
+        ae.encoderDrive(1,7);
         au.noDrag();
-        au.pause(.3);
-        au.strafeTime(1,-90,1);
-        ae.encoderDrive(-1,-60);
-
+        au.pause(.5);
+        ae.encoderDrive(-.5,-5);
+        au.strafeTime(.75,-90,1);
+        gu.gyroTurn(TURN_SPEED,90);
+        gu.gyroTurn(TURN_SPEED,90);
+        ae.encoderDrive(-.5,-45);
     }
 }

@@ -63,7 +63,7 @@ public class Strafe extends OpMode {
     STATE dragStatus = STATE.UP;
     STATE dragDown = STATE.OFF;
     STATE dragUp = STATE.OFF;
-    STATE flipstatus = STATE.CLOSED;
+    STATE flipstatus = STATE.OPEN;
     STATE flipClosed = STATE.OFF;
     STATE flipOpen = STATE.OFF;
     STATE capMove = STATE.OFF;
@@ -73,7 +73,7 @@ public class Strafe extends OpMode {
     STATE armMoveR = STATE.OFF;
 
     //define all double variables
-    private double Gear = 0.6;
+    private double Gear = 0.8;
     private static final Double GearChange = .05;
     private double offset = 0;
     private double drive1;
@@ -97,8 +97,8 @@ public class Strafe extends OpMode {
     private double lift;
     private double liftup;
     private double liftdown;
-    private double armOffset = .30;
-    private double dragoffset = .4;
+    private double armOffset = .0;
+    private double dragoffset = 0;
     private double extOffset = .00;
     private double flipOffset = 1;
     private double capPos = 0;
@@ -109,7 +109,7 @@ public class Strafe extends OpMode {
         robot.init(hardwareMap);
 
         robot.clawServo.setPosition(robot.MID_SERVO);
-        robot.armServo.setPosition(.30);
+        robot.armServo.setPosition(.0);
 
 
         // Send telemetry message to signify robot waiting;
@@ -238,7 +238,7 @@ public class Strafe extends OpMode {
             flipClosed = STATE.INPROGRESS;
         }
         else if (!gamepad2.x && flipstatus == STATE.OPEN && flipClosed == STATE.INPROGRESS){
-            flipOffset = .28;
+            flipOffset = .0;
             flipstatus = STATE.CLOSED;
             flipClosed = STATE.OFF;
         }
@@ -246,7 +246,7 @@ public class Strafe extends OpMode {
             flipOpen = STATE.INPROGRESS;
         }
         else if (!gamepad2.x && flipstatus == STATE.CLOSED && flipOpen == STATE.INPROGRESS){
-            flipOffset = .0;
+            flipOffset = .28;
             flipstatus = STATE.OPEN;
             flipOpen = STATE.OFF;
         }
@@ -255,13 +255,8 @@ public class Strafe extends OpMode {
         if(gamepad2.left_bumper && (armPosition == STATE.RIGHT || armPosition == STATE.MID) && armMoveL == STATE.OFF){
             armMoveL = STATE.INPROGRESS;
         }
-        else if (!gamepad2.left_bumper && armPosition == STATE.RIGHT && armMoveL == STATE.INPROGRESS){
-            armOffset = .30;
-            armPosition = STATE.MID;
-            armMoveL = STATE.OFF;
-        }
         else if (!gamepad2.left_bumper && armPosition == STATE.MID && armMoveL == STATE.INPROGRESS){
-            armOffset = .625;
+            armOffset = .32;
             armPosition = STATE.LEFT;
             armMoveL = STATE.OFF;
         }
@@ -269,23 +264,18 @@ public class Strafe extends OpMode {
             armMoveR = STATE.INPROGRESS;
         }
         else if (!gamepad2.right_bumper && armPosition == STATE.LEFT && armMoveR == STATE.INPROGRESS){
-            armOffset = .3;
+            armOffset = 0;
             armPosition = STATE.MID;
-            armMoveR = STATE.OFF;
-        }
-        else if (!gamepad2.right_bumper && armPosition == STATE.MID && armMoveR == STATE.INPROGRESS){
-            armOffset = .0;
-            armPosition = STATE.RIGHT;
             armMoveR = STATE.OFF;
         }
 
         //resets the arm to its original, center position
         //moves the longer of the 2 arms up and out of the way
         if (gamepad2.y){
-            armOffset = .30;
+            armOffset = .0;
             armPosition = STATE.MID;
             flipOffset = 1;
-            flipstatus = STATE.CLOSED;
+            flipstatus = STATE.OPEN;
         }
 
         //controls the 2 rotating plates at the front of the robot, allowing them to swing up or down
@@ -293,7 +283,7 @@ public class Strafe extends OpMode {
             dragDown = STATE.INPROGRESS;
         }
         else if (!gamepad2.b && dragStatus == STATE.UP && dragDown == STATE.INPROGRESS){
-            dragoffset = .4;
+            dragoffset = 0;
             dragStatus = STATE.DOWN;
             dragDown = STATE.OFF;
         }
@@ -301,7 +291,7 @@ public class Strafe extends OpMode {
             dragUp = STATE.INPROGRESS;
         }
         else if (!gamepad2.b && dragStatus == STATE.DOWN && dragUp == STATE.INPROGRESS){
-            dragoffset = .025;
+            dragoffset =.75;
             dragStatus = STATE.UP;
             dragUp = STATE.OFF;
         }
@@ -342,16 +332,15 @@ public class Strafe extends OpMode {
         //plugs in all servo variables, moving them to their new position
         robot.clawServo.setPosition(offset);
         robot.armServo.setPosition(armOffset);
-        robot.dragServo.setPosition(dragoffset);
+        robot.dragServo1.setPosition(dragoffset);
+        robot.dragServo2.setPosition(dragoffset);
         robot.flipServo.setPosition(flipOffset);
 
         //gives feedback to the driver(s)
-        telemetry.addData("leftF",  "%.2f", lF);
-        telemetry.addData("leftR",  "%.2f", lR);
-        telemetry.addData("rightF",  "%.2f", rR);
-        telemetry.addData("rightR",  "%.2f", rR);
         telemetry.addData("Gear","%.2f", Gear);
-        telemetry.addData("ClawStatus", clawstatus);
+        telemetry.addData("Large Claw Status:",flipstatus);
+        telemetry.addData("Small Claw Status:", clawstatus);
+        telemetry.addData("Drag Status:", dragStatus);
         telemetry.update();
 
     }
