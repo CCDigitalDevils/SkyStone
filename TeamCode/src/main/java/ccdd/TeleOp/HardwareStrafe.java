@@ -82,6 +82,10 @@ public class HardwareStrafe
     public static final double MID_SERVO = 0 ;
     public static final double SERVO_CLOSED = .35;
     public static final double TURN_SPEED = .5;
+    public static final double RIGHT_ORIGIN = -90;
+    public static final double LEFT_ORIGIN = 90;
+    public static final double ORIGIN = 0;
+    public static final double REVERSE_ORIGIN = 180;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;

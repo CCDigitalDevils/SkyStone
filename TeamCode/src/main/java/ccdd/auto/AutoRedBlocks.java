@@ -36,6 +36,9 @@ import ccdd.util.AutonomousUtilities;
 import ccdd.util.GyroUtilities;
 import ccdd.util.STATE;
 
+import static ccdd.TeleOp.HardwareStrafe.LEFT_ORIGIN;
+import static ccdd.TeleOp.HardwareStrafe.ORIGIN;
+import static ccdd.TeleOp.HardwareStrafe.RIGHT_ORIGIN;
 import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
 
 /**
@@ -100,12 +103,12 @@ public class AutoRedBlocks extends LinearOpMode {
         au.pause(.5);
         au.liftTime(.5, up, .2);
         ae.encoderDrive(-.5, -3);
-        gu.gyroTurn(TURN_SPEED,-90);
-        gu.gyroTurn(TURN_SPEED,-90);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
         ae.encoderDrive(1,105);
         au.liftTime(.5, up, 1.5);
-        gu.gyroTurn(TURN_SPEED,0);
-        gu.gyroTurn(TURN_SPEED,0);
+        gu.gyroTurn(TURN_SPEED,ORIGIN);
+        gu.gyroTurn(TURN_SPEED,ORIGIN);
         ae.encoderDrive(.5,11);
         au.liftTime(.5, down, .25);
         au.extOpen();
@@ -113,18 +116,18 @@ public class AutoRedBlocks extends LinearOpMode {
         au.armReset();
         au.pause(.5);
         au.liftDown();
-        gu.gyroTurn(TURN_SPEED,90);
-        gu.gyroTurn(TURN_SPEED,90);
+        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
         ae.encoderDrive(1,118);
         au.armOut();
-        gu.gyroTurn(TURN_SPEED,0);
-        gu.gyroTurn(TURN_SPEED,0);
+        gu.gyroTurn(TURN_SPEED,ORIGIN);
+        gu.gyroTurn(TURN_SPEED,ORIGIN);
         ae.encoderDrive(.5,10);
         au.extClosed();
         au.pause(.5);
         ae.encoderDrive(-.5,-2);
-        gu.gyroTurn(TURN_SPEED,-90);
-        gu.gyroTurn(TURN_SPEED,-90);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
         ae.encoderDrive(1,90);
         au.extOpen();
         au.pause(.1);

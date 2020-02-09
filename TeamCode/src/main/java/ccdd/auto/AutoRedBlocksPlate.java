@@ -36,28 +36,9 @@ import ccdd.util.AutonomousUtilities;
 import ccdd.util.GyroUtilities;
 import ccdd.util.STATE;
 
+import static ccdd.TeleOp.HardwareStrafe.ORIGIN;
+import static ccdd.TeleOp.HardwareStrafe.RIGHT_ORIGIN;
 import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
-
-/**
- * This file illustrates the concept of driving a path based on time.
- * It uses the common Pushbot hardware class to define the drive on the robot.
- * The code is structured as a LinearOpMode
- *
- * The code assumes that you do NOT have encoders on the wheels,
- *   otherwise you would use: PushbotAutoDriveByEncoder;
- *
- *   The desired path in this example is:
- *   - Drive forward for 3 seconds
- *   - Spin right for 1.3 seconds
- *   - Drive Backwards for 1 Second
- *   - Stop and close the claw.
- *
- *  The code is written in a simple form with no optimizations.
- *  However, there are several ways that this type of sequence could be streamlined,
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
 
 @Autonomous(name="Auto Red, Blocks + Plate", group="Red")
 //@Disabled
@@ -100,12 +81,12 @@ public class AutoRedBlocksPlate extends LinearOpMode {
         au.pause(.5);
         au.liftTime(.5, up, .2);
         ae.encoderDrive(-.5, -1);
-        gu.gyroTurn(TURN_SPEED,-90);
-        gu.gyroTurn(TURN_SPEED,-90);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
         ae.encoderDrive(1,105);
         au.liftTime(.5, up, 1.5);
-        gu.gyroTurn(TURN_SPEED,0);
-        gu.gyroTurn(TURN_SPEED,0);
+        gu.gyroTurn(TURN_SPEED,ORIGIN);
+        gu.gyroTurn(TURN_SPEED,ORIGIN);
         ae.encoderDrive(.5,9);
         au.liftTime(.5, down, .25);
         au.extOpen();
@@ -113,15 +94,15 @@ public class AutoRedBlocksPlate extends LinearOpMode {
         au.drag();
         au.pause(.75);
         ae.encoderDrive(-.75,-20);
-        gu.gyroTurn(TURN_SPEED,-90);
-        gu.gyroTurn(TURN_SPEED,-90);
+        gu.gyroTurn(1,RIGHT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
         ae.encoderDrive(1,7);
         au.noDrag();
         au.pause(.5);
         au.strafeTime(.75,90,1.5);
-        au.strafeTime(.75,-90,1);
-        gu.gyroTurn(TURN_SPEED,-90);
-        gu.gyroTurn(TURN_SPEED,-90);
+        au.strafeTime(.75,-90,1.4);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
         ae.encoderDrive(-.5,-45);
     }
 }

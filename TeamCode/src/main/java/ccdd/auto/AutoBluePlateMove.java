@@ -37,6 +37,7 @@ import ccdd.util.AutonomousUtilities;
 import ccdd.util.GyroUtilities;
 import ccdd.util.STATE;
 
+import static ccdd.TeleOp.HardwareStrafe.LEFT_ORIGIN;
 import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
 
 /**
@@ -91,21 +92,22 @@ public class AutoBluePlateMove extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        au.liftTime(.5, up, .1);
+        au.liftTime(.5, up, .5);
         au.strafeTime(.5,-90,.75);
         ae.encoderDrive(.25,40);
         au.drag();
         au.pause(.75);
         ae.encoderDrive(-.75,-15);
-        gu.gyroTurn(TURN_SPEED,90);
-        gu.gyroTurn(TURN_SPEED,90);
+        gu.gyroTurn(1,LEFT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
         ae.encoderDrive(1,7);
         au.noDrag();
         au.pause(.5);
         ae.encoderDrive(-.5,-5);
-        au.strafeTime(.75,-90,1);
-        gu.gyroTurn(TURN_SPEED,90);
-        gu.gyroTurn(TURN_SPEED,90);
+        au.strafeTime(.75,-90,1.5);
+        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
         ae.encoderDrive(-.5,-45);
+        au.armOut();
     }
 }

@@ -37,6 +37,9 @@ import ccdd.util.AutonomousUtilities;
 import ccdd.util.GyroUtilities;
 import ccdd.util.STATE;
 
+import static ccdd.TeleOp.HardwareStrafe.RIGHT_ORIGIN;
+import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
+
 /**
  * This file illustrates the concept of driving a path based on time.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -59,7 +62,7 @@ import ccdd.util.STATE;
  */
 
 @Autonomous(name="Auto Test", group="Test")
-@Disabled
+//@Disabled
 public class AutoTest extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -91,13 +94,7 @@ public class AutoTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-
-       gu.gyroTurn(.5,90);
-       au.pause(5);
-       gu.gyroTurn(.5,-90);
-       au.pause(5);
-       gu.gyroTurn(.5,0);
-
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN,2000l);
 
     }
 }

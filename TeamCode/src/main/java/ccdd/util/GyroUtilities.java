@@ -51,7 +51,13 @@ public class GyroUtilities {
      *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
      *                   If a relative angle is required, add/subtract from current heading.
      */
-    public void gyroTurn (  double speed, double angle) {
+    public void gyroTurn ( double speed, double angle) {
+        gyroTurn(speed,angle,Long.MAX_VALUE);
+    }
+
+    public void gyroTurn ( double speed, double angle, Long time) {
+        Long startTime = System.currentTimeMillis();
+        Long duration = 0l;
 
         // keep looping while we are still active, and not on heading.
         while (linearOpMode.opModeIsActive() && !onHeading(speed, angle, P_TURN_COEFF)) {
@@ -60,6 +66,11 @@ public class GyroUtilities {
 
             linearOpMode.telemetry.addData("Position ", o.thirdAngle);
             linearOpMode.telemetry.update();
+
+            if (duration > time){
+                break;
+            }
+            duration = System.currentTimeMillis() - startTime;
         }
     }
 
@@ -148,8 +159,8 @@ public class GyroUtilities {
         // calculate error in -179 to +180 range  (
         Orientation orientation = robot.imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
         robotError = targetAngle - orientation.thirdAngle;
-        while (robotError > 180)  robotError -= 360;
-        while (robotError <= -180) robotError += 360;
+        if (robotError > 180)  robotError -= 360;
+        if (robotError <= -180) robotError += 360;
         return robotError;
     }
 
