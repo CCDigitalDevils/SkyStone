@@ -61,36 +61,14 @@ import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
 
 @Autonomous(name="Auto Blue, Blocks + Plate", group="Blue")
 //@Disabled
-public class AutoBlueBlocksPlate extends LinearOpMode {
+public class AutoBlueBlocksPlate extends AutoBasic {
 
-    /* Declare OpMode members. */
-    HardwareStrafeAuto         robot   = new HardwareStrafeAuto();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
 
-    private AutonomousUtilities au;
-    private GyroUtilities gu;
-    private AutoEncoder ae;
-    private STATE open = STATE.OPEN;
-    private STATE closed = STATE.CLOSED;
-    private STATE left = STATE.LEFT;
-    private STATE right = STATE.RIGHT;
-    private STATE up = STATE.UP;
-    private STATE down = STATE.DOWN;
 
     @Override
     public void runOpMode() {
 
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        robot.init(hardwareMap);
-        au = new AutonomousUtilities(robot, this, runtime);
-        gu = new GyroUtilities(robot, this, runtime);
-        ae = new AutoEncoder(robot,this,runtime);
-
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
+        initAutoBasic();
 
         robot.clawServo.setPosition(robot.MID_SERVO);
         robot.armServo.setPosition(.0);

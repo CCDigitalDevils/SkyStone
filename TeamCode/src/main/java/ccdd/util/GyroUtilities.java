@@ -148,8 +148,14 @@ public class GyroUtilities {
         // calculate error in -179 to +180 range  (
         Orientation orientation = robot.imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
         robotError = targetAngle - orientation.thirdAngle;
-        while (robotError > 180)  robotError -= 360;
-        while (robotError <= -180) robotError += 360;
+        if(robotError > 180)
+        {
+            robotError -= 360;
+        }
+        else if (robotError <= -180)
+        {
+            robotError += 360;
+        }
         return robotError;
     }
 
