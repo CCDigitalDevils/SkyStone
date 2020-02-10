@@ -51,7 +51,7 @@ import ccdd.util.STATE;
  */
 
 @TeleOp(name="Light Test", group="Strafebot")
-@Disabled
+//@Disabled
 public class Light_Test extends OpMode {
 
     /* Declare OpMode members. */
@@ -82,15 +82,15 @@ public int calibrateRAW (int raw){
 }
     @Override
     public void loop() {
-        telemetry.addData("red level", calibrateRAW(robot.colorSensor.red()));
-        telemetry.addData("green level",  calibrateRAW(robot.colorSensor.green()));
-        telemetry.addData("blue level",  calibrateRAW(robot.colorSensor.blue()));
-        telemetry.addData("alpha level",  calibrateRAW(robot.colorSensor.alpha()));
-//        telemetry.addData("red level RAW", robot.colorSensor.red());
-//        telemetry.addData("green level RAW",  robot.colorSensor.green());
-//        telemetry.addData("blue level RAW",  robot.colorSensor.blue());
-//        telemetry.addData("alpha level RAW",  robot.colorSensor.alpha());
-        telemetry.addData("distance inches", robot.distanceSensor.getDistance(DistanceUnit.CM));
+//        telemetry.addData("red level", calibrateRAW(robot.colorSensor.red()));
+//        telemetry.addData("green level",  calibrateRAW(robot.colorSensor.green()));
+//        telemetry.addData("blue level",  calibrateRAW(robot.colorSensor.blue()));
+//        telemetry.addData("alpha level",  calibrateRAW(robot.colorSensor.alpha()));
+        telemetry.addData("red level RAW", robot.colorSensor.red());
+        telemetry.addData("green level RAW",  robot.colorSensor.green());
+        telemetry.addData("blue level RAW",  robot.colorSensor.blue());
+        telemetry.addData("alpha level RAW",  robot.colorSensor.alpha());
+//        telemetry.addData("distance inches", robot.distanceSensor.getDistance(DistanceUnit.CM));
         telemetry.update();
 
 

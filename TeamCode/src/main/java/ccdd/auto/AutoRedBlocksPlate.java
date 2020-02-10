@@ -36,6 +36,7 @@ import ccdd.util.AutonomousUtilities;
 import ccdd.util.GyroUtilities;
 import ccdd.util.STATE;
 
+import static ccdd.TeleOp.HardwareStrafe.LEFT_ORIGIN;
 import static ccdd.TeleOp.HardwareStrafe.ORIGIN;
 import static ccdd.TeleOp.HardwareStrafe.RIGHT_ORIGIN;
 import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
@@ -47,6 +48,7 @@ public class AutoRedBlocksPlate extends AutoBasic {
     @Override
     public void runOpMode() {
 
+        initAutoBasic();
 
         robot.clawServo.setPosition(robot.MID_SERVO);
         robot.armServo.setPosition(.0);
@@ -69,8 +71,8 @@ public class AutoRedBlocksPlate extends AutoBasic {
         au.drag();
         au.pause(.75);
         ae.encoderDrive(-.75,-20);
-        gu.gyroTurn(1,RIGHT_ORIGIN);
-        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
+        gu.gyroTurn(1,RIGHT_ORIGIN,2000l);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN,2000l);
         ae.encoderDrive(1,7);
         au.noDrag();
         au.pause(.5);

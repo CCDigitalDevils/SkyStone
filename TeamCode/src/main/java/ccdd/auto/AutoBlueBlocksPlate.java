@@ -93,8 +93,8 @@ public class AutoBlueBlocksPlate extends AutoBasic {
         au.drag();
         au.pause(.75);
         ae.encoderDrive(-.75,-20);
-        gu.gyroTurn(1,LEFT_ORIGIN);
-        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
+        gu.gyroTurn(1,LEFT_ORIGIN,2000l);
+        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN,2000l);
         ae.encoderDrive(1,7);
         au.noDrag();
         au.pause(.5);

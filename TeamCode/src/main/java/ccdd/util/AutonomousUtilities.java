@@ -177,7 +177,7 @@ public class AutonomousUtilities {
         Long startTime = System.currentTimeMillis();
         Long duration = 0l;
 
-        while (robot.bottomedSensor.getState() == true && duration < 2000){
+        while (robot.bottomedSensor.getState() == true && duration < 1000){
             robot.Drive4.setPower(-.5);
             duration = System.currentTimeMillis() - startTime;
         }

@@ -98,9 +98,9 @@ public class AutoBluePlateMove extends LinearOpMode {
         au.drag();
         au.pause(.75);
         ae.encoderDrive(-.75,-15);
-        gu.gyroTurn(1,LEFT_ORIGIN);
-        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
-        ae.encoderDrive(1,7);
+        gu.gyroTurn(1,LEFT_ORIGIN,2000l);
+        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN,2000l);
+        ae.encoderDrive(1,20);
         au.noDrag();
         au.pause(.5);
         ae.encoderDrive(-.5,-5);

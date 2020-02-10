@@ -29,6 +29,7 @@ package ccdd.auto;/* Copyright (c) 2017 FIRST. All rights reserved.
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import ccdd.util.AutoEncoder;
@@ -102,36 +103,37 @@ public class AutoBlueBlocks extends LinearOpMode {
         ae.encoderDrive(.5,37);
         au.extClosed();
         au.pause(.5);
-        au.liftTime(.5, up, .2);
+        au.liftTime(.5, up, .3);
         ae.encoderDrive(-.5, -3);
         gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
         gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
-        ae.encoderDrive(1,105);
+        ae.encoderDrive(1,100);
         au.liftTime(.5, up, 1.5);
         gu.gyroTurn(TURN_SPEED,ORIGIN);
         gu.gyroTurn(TURN_SPEED,ORIGIN);
         ae.encoderDrive(.5,11);
         au.liftTime(.5, down, .25);
         au.extOpen();
-        ae.encoderDrive(-.5,-5);
+        ae.encoderDrive(-.5,-7);
         au.armReset();
         au.pause(.5);
         au.liftDown();
         gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
         gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
-        ae.encoderDrive(1,118);
+        ae.encoderDrive(1,108);
         au.armOut();
         gu.gyroTurn(TURN_SPEED,ORIGIN);
         gu.gyroTurn(TURN_SPEED,ORIGIN);
         ae.encoderDrive(.5,10);
         au.extClosed();
         au.pause(.5);
-        ae.encoderDrive(-.5,-2);
+        ae.encoderDrive(-.5,-4);
         gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
         gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
         ae.encoderDrive(1,90);
         au.extOpen();
         au.pause(.1);
+        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
         ae.encoderDrive(-1,-30);
 
     }

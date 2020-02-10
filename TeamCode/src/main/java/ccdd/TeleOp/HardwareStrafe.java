@@ -29,6 +29,7 @@ package ccdd.TeleOp;/* Copyright (c) 2017 FIRST. All rights reserved.
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -109,6 +110,7 @@ public class HardwareStrafe
         Drive4 = hwMap.get(DcMotor.class, "drive4");
         bottomedSensor = hwMap.get(DigitalChannel.class, "touch0-1");
         maxxedSensor = hwMap.get(DigitalChannel.class, "touch2-3");
+        colorSensor = hwMap.get(RevColorSensorV3.class,"I2C-0");
         Drive0.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         Drive1.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         Drive2.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
