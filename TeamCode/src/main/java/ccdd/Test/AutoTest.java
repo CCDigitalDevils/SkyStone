@@ -1,4 +1,4 @@
-package ccdd.auto;/* Copyright (c) 2017 FIRST. All rights reserved.
+package ccdd.Test;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -32,6 +32,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import ccdd.auto.HardwareStrafeAuto;
 import ccdd.util.AutoEncoder;
 import ccdd.util.AutonomousUtilities;
 import ccdd.util.GyroUtilities;
@@ -62,11 +63,11 @@ import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
  */
 
 @Autonomous(name="Auto Test", group="Test")
-//@Disabled
+@Disabled
 public class AutoTest extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareStrafeAuto         robot   = new HardwareStrafeAuto();   // Use a Pushbot's hardware
+    HardwareStrafeAuto robot   = new HardwareStrafeAuto();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
     private AutonomousUtilities au;

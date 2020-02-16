@@ -74,7 +74,7 @@ public class Strafe extends OpMode {
 
     //define all double variables
     private double Gear = 0.8;
-    private static final Double GearChange = .05;
+    private static final double GearChange = .05;
     private double offset = 0;
     private double drive1;
     private double strafe1;

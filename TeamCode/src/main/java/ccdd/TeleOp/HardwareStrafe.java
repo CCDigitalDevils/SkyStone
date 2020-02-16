@@ -136,8 +136,12 @@ public class HardwareStrafe
         Drive3.setPower(0);
         Drive4.setPower(0);
 
-        // Set all motors to run without encoders.
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
+        Drive0.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Drive1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Drive2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Drive3.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Drive4.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         Drive0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Drive1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Drive2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

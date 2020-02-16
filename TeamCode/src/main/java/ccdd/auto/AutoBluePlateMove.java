@@ -94,7 +94,7 @@ public class AutoBluePlateMove extends LinearOpMode {
         waitForStart();
         au.liftTime(.5, up, .5);
         au.strafeTime(.5,-90,.75);
-        ae.encoderDrive(.25,40);
+        ae.encoderDrive(.5,40);
         au.drag();
         au.pause(.75);
         ae.encoderDrive(-.75,-15);

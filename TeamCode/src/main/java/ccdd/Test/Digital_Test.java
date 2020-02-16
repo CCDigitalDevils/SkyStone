@@ -49,7 +49,7 @@ import ccdd.util.STATE;
  */
 
 @TeleOp(name="Digital test", group="Test")
-//@Disabled
+@Disabled
 public class Digital_Test extends OpMode {
 
     /* Declare OpMode members. */

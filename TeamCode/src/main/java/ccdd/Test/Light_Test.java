@@ -51,7 +51,7 @@ import ccdd.util.STATE;
  */
 
 @TeleOp(name="Light Test", group="Strafebot")
-//@Disabled
+@Disabled
 public class Light_Test extends OpMode {
 
     /* Declare OpMode members. */
