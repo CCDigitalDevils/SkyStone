@@ -70,8 +70,7 @@ public class HardwareStrafe
     public Servo dragServo1 = null;
     public Servo dragServo2 = null;
     public Servo flipServo = null;
-    public Servo capGrip = null;
-    public Servo capArm = null;
+    public Servo cap = null;
     public CRServo tape = null;
     public DigitalChannel bottomedSensor = null;
     public DigitalChannel maxxedSensor = null;
@@ -152,8 +151,7 @@ public class HardwareStrafe
         clawServo = hwMap.get(Servo.class, "servo1-1");
         armServo = hwMap.get(Servo.class, "servo1-0");
         flipServo = hwMap.get(Servo.class, "servo1-3");
-        capArm = hwMap.get(Servo.class, "servo1-4");
-        capGrip = hwMap.get(Servo.class, "servo1-5");
+        cap = hwMap.get(Servo.class, "servo1-5");
         dragServo1 = hwMap.get(Servo.class, "servo2-3");
         dragServo2 = hwMap.get(Servo.class,"servo2-4");
 
@@ -166,8 +164,7 @@ public class HardwareStrafe
         dragServo1.setPosition(.0);
         dragServo2.setPosition(.0);
         flipServo.setPosition(1);
-        capGrip.setPosition(.1);
-        capArm.setPosition(0);
+        cap.setPosition(.3);
     }
  }
 

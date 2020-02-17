@@ -30,6 +30,7 @@ public class AutonomousUtilities {
             robot.Drive1.setPower(rFlR);
             robot.Drive2.setPower(rFlR);
             robot.Drive3.setPower(lFrR);
+            System.out.printf("lFrR %s , rFlR %s %n", lFrR, rFlR );
 
         }
     }
@@ -60,6 +61,31 @@ public class AutonomousUtilities {
             clawClosed();
         }
         strafeTime(speed, angle, time);
+    }
+
+    public void strafeLeft(double speed, double time){
+        runtime.reset();
+        while (linearOpMode.opModeIsActive() && (runtime.seconds() < time)) {
+            robot.Drive0.setPower(-speed);
+            robot.Drive1.setPower(speed);
+            robot.Drive2.setPower(speed);
+            robot.Drive3.setPower(-speed);
+            linearOpMode.telemetry.addData("Path", "Leg: %2.5f S Elapsed", runtime.seconds());
+            linearOpMode.telemetry.update();
+        }
+        stopMotors();
+    }
+    public void strafeRight(double speed, double time){
+        runtime.reset();
+        while (linearOpMode.opModeIsActive() && (runtime.seconds() < time)) {
+            robot.Drive0.setPower(speed);
+            robot.Drive1.setPower(-speed);
+            robot.Drive2.setPower(-speed);
+            robot.Drive3.setPower(speed);
+            linearOpMode.telemetry.addData("Path", "Leg: %2.5f S Elapsed", runtime.seconds());
+            linearOpMode.telemetry.update();
+        }
+        stopMotors();
     }
 
     public void doubleOpen() {

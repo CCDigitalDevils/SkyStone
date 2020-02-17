@@ -63,7 +63,7 @@ import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
  */
 
 @Autonomous(name="Auto Test", group="Test")
-@Disabled
+//@Disabled
 public class AutoTest extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -95,7 +95,9 @@ public class AutoTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN,2000l);
+        ae.encoderDrive(1,1 );
+        au.strafeLeft(.75,1);
+        au.strafeRight(.75,1);
 
     }
 }

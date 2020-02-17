@@ -1,5 +1,6 @@
 package ccdd.util;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -52,7 +53,13 @@ public class GyroUtilities {
      *                   If a relative angle is required, add/subtract from current heading.
      */
     public void gyroTurn ( double speed, double angle) {
+        DcMotor.RunMode originalMode0 = robot.Drive0.getMode();
+        DcMotor.RunMode originalMode1 = robot.Drive1.getMode();
+        robot.Drive0.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.Drive1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         gyroTurn(speed,angle,Long.MAX_VALUE);
+        robot.Drive0.setMode(originalMode0);
+        robot.Drive1.setMode(originalMode1);
     }
 
     public void gyroTurn ( double speed, double angle, Long time) {

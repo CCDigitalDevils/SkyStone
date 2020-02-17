@@ -71,8 +71,8 @@ public class AutoEncoder {
 
 
             // Turn off RUN_TO_POSITION
-            robot.Drive0.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            robot.Drive1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.Drive0.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.Drive1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
     }
 }

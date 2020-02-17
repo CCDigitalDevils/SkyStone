@@ -27,6 +27,7 @@ package ccdd.TeleOp;/* Copyright (c) 2017 FIRST. All rights reserved.
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
@@ -66,7 +67,8 @@ public class Strafe extends OpMode {
     STATE flipstatus = STATE.OPEN;
     STATE flipClosed = STATE.OFF;
     STATE flipOpen = STATE.OFF;
-    STATE capMove = STATE.OFF;
+    STATE capUp = STATE.OFF;
+    STATE capDown = STATE.OFF;
     STATE capStatus = STATE.UP;
     STATE armPosition = STATE.MID;
     STATE armMoveL = STATE.OFF;
@@ -101,7 +103,7 @@ public class Strafe extends OpMode {
     private double dragoffset = 0;
     private double extOffset = .00;
     private double flipOffset = 1;
-    private double capPos = 0;
+    private double capPos = .25;
     //set up all variables
 
     @Override
@@ -297,50 +299,34 @@ public class Strafe extends OpMode {
         }
 
         //allows the arm and grip that hold the capstone to move down
-        if (gamepad1.b && capMove == STATE.OFF) {
-            capMove = STATE.INPROGRESS;
+        if (gamepad1.b && capStatus == STATE.UP && capDown == STATE.OFF) {
+            capDown = STATE.INPROGRESS;
         }
-        else if (!gamepad1.b && capMove == STATE.INPROGRESS){
-            robot.capArm.setPosition(.5);
-
-            try {
-                Thread.sleep(750);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            robot.capGrip.setPosition(0);
-
-            try {
-                Thread.sleep(200);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            robot.capArm.setPosition(0);
-
-            try {
-                Thread.sleep(200);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            robot.capGrip.setPosition(.1);
-            capMove = STATE.OFF;
+        else if (!gamepad1.b && capStatus == STATE.UP && capDown == STATE.INPROGRESS){
+            capPos = .25;
+            capStatus = STATE.DOWN;
+            capDown = STATE.OFF;
         }
-
+        if (gamepad1.b && capStatus == STATE.DOWN && capUp == STATE.OFF){
+            capUp = STATE.INPROGRESS;
+        }
+        else if (!gamepad1.b && capStatus == STATE.DOWN && capUp == STATE.INPROGRESS){
+            capPos = 0;
+            capStatus = STATE.UP;
+            capUp = STATE.OFF;
+        }
         //plugs in all servo variables, moving them to their new position
         robot.clawServo.setPosition(offset);
         robot.armServo.setPosition(armOffset);
         robot.dragServo1.setPosition(dragoffset);
         robot.dragServo2.setPosition(dragoffset);
         robot.flipServo.setPosition(flipOffset);
+        robot.cap.setPosition(capPos);
 
         //gives feedback to the driver(s)
         telemetry.addData("Gear","%.2f", Gear);
         telemetry.addData("Large Claw Status:",flipstatus);
         telemetry.addData("Small Claw Status:", clawstatus);
-        telemetry.addData("Drag Status:", dragStatus);
         telemetry.update();
 
     }
