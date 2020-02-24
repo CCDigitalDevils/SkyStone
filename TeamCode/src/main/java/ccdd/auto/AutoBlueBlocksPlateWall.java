@@ -28,16 +28,9 @@ package ccdd.auto;/* Copyright (c) 2017 FIRST. All rights reserved.
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import ccdd.TeleOp.HardwareStrafe;
-import ccdd.util.AutoEncoder;
-import ccdd.util.AutonomousUtilities;
-import ccdd.util.GyroUtilities;
-import ccdd.util.STATE;
 
 import static ccdd.TeleOp.HardwareStrafe.LEFT_ORIGIN;
+import static ccdd.TeleOp.HardwareStrafe.ORIGIN;
 import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
 
 /**
@@ -61,53 +54,46 @@ import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Blue Plate Move", group="Blue")
+@Autonomous(name="Wall, Blue, Blocks + Plate", group="Blue Wall")
 //@Disabled
-public class AutoBluePlateMove extends LinearOpMode {
+public class AutoBlueBlocksPlateWall extends AutoBasic {
 
-    /* Declare OpMode members. */
-    HardwareStrafe robot   = new HardwareStrafe();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
 
-    private AutonomousUtilities au;
-    private GyroUtilities gu;
-    private AutoEncoder ae;
-    private STATE open = STATE.OPEN;
-    private STATE closed = STATE.CLOSED;
-    private STATE left = STATE.LEFT;
-    private STATE right = STATE.RIGHT;
-    private STATE up = STATE.UP;
-    private STATE down = STATE.DOWN;
 
     @Override
     public void runOpMode() {
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        robot.init(hardwareMap);
-        au = new AutonomousUtilities(robot, this, runtime);
-        gu = new GyroUtilities(robot, this, runtime);
-        ae = new AutoEncoder(robot,this,runtime);
 
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-        au.liftTime(.5, up, .5);
-        au.strafeTime(.5,-90,.75);
-        ae.encoderDrive(.5,40);
+        initAutoBasic();
+
+        robot.clawServo.setPosition(robot.MID_SERVO);
+        robot.armServo.setPosition(.0);
+
+        ae.encoderDrive(.5,36);
+        au.extClosed();
+        au.pause(.5);
+        au.liftTime(.5, up, .2);
+        ae.encoderDrive(-.5, -1);
+        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
+        ae.encoderDrive(1,95);
+        au.liftTime(1, up, .5);
+        gu.gyroTurn(TURN_SPEED,ORIGIN);
+        gu.gyroTurn(TURN_SPEED,ORIGIN);
+        ae.encoderDrive(.5,9);
         au.drag();
-        au.pause(.75);
-        ae.encoderDrive(-.75,-15);
+        au.extOpen();
+        au.pause(.5);
+        ae.encoderDrive(-1,-20);
         gu.gyroTurn(1,LEFT_ORIGIN,2000l);
         gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN,2000l);
-        ae.encoderDrive(1,20);
+        ae.encoderDrive(1,7);
         au.noDrag();
         au.pause(.5);
-        ae.encoderDrive(-.5,-5);
-        au.strafeTime(.75,-90,1.5);
+        au.strafeTime(.75,-100,1.5);
+        au.liftDown();
         gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
         gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
         ae.encoderDrive(-.5,-45);
-        au.armOut();
+
     }
 }

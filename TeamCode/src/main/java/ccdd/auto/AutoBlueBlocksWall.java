@@ -28,14 +28,6 @@ package ccdd.auto;/* Copyright (c) 2017 FIRST. All rights reserved.
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import ccdd.util.AutoEncoder;
-import ccdd.util.AutonomousUtilities;
-import ccdd.util.GyroUtilities;
-import ccdd.util.STATE;
 
 import static ccdd.TeleOp.HardwareStrafe.LEFT_ORIGIN;
 import static ccdd.TeleOp.HardwareStrafe.ORIGIN;
@@ -66,36 +58,14 @@ import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
   Comment by Jeremy To test github push
  */
 
-@Autonomous(name="Auto Blue, Blocks"  , group="Blue")
+@Autonomous(name="Wall, Blue, Blocks"  , group="Blue Wall")
 //@Disabled
-public class AutoBlueBlocks extends LinearOpMode {
-    /* Declare OpMode members. */
-    HardwareStrafeAuto         robot   = new HardwareStrafeAuto();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
-
-    private AutonomousUtilities au;
-    private GyroUtilities gu;
-    private AutoEncoder ae;
-    private STATE open = STATE.OPEN;
-    private STATE closed = STATE.CLOSED;
-    private STATE left = STATE.LEFT;
-    private STATE right = STATE.RIGHT;
-    private STATE up = STATE.UP;
-    private STATE down = STATE.DOWN;
+public class AutoBlueBlocksWall extends AutoBasic {
 
     @Override
     public void runOpMode() {
 
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        robot.init(hardwareMap);
-        au = new AutonomousUtilities(robot, this, runtime);
-        gu = new GyroUtilities(robot, this, runtime);
-        ae = new AutoEncoder(robot,this,runtime);
-
-        waitForStart();
+        initAutoBasic();
 
         robot.clawServo.setPosition(robot.MID_SERVO);
         robot.armServo.setPosition(.0);
@@ -108,7 +78,7 @@ public class AutoBlueBlocks extends LinearOpMode {
         gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
         gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
         ae.encoderDrive(1,100);
-        au.liftTime(.5, up, 1.5);
+        au.liftTime(1, up, .5);
         gu.gyroTurn(TURN_SPEED,ORIGIN);
         gu.gyroTurn(TURN_SPEED,ORIGIN);
         ae.encoderDrive(.5,11);
@@ -124,7 +94,7 @@ public class AutoBlueBlocks extends LinearOpMode {
         au.armOut();
         gu.gyroTurn(TURN_SPEED,ORIGIN);
         gu.gyroTurn(TURN_SPEED,ORIGIN);
-        ae.encoderDrive(.5,10);
+        ae.encoderDrive(.5,5);
         au.extClosed();
         au.pause(.5);
         ae.encoderDrive(-.5,-4);
@@ -133,8 +103,9 @@ public class AutoBlueBlocks extends LinearOpMode {
         ae.encoderDrive(1,90);
         au.extOpen();
         au.pause(.1);
+        au.strafeTime(.75,-90,1.5);
         gu.gyroTurn(TURN_SPEED,LEFT_ORIGIN);
-        ae.encoderDrive(-1,-30);
+        ae.encoderDrive(-1,-40);
 
     }
 }

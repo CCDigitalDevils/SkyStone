@@ -1,4 +1,4 @@
-package ccdd.Test;/* Copyright (c) 2017 FIRST. All rights reserved.
+package ccdd.auto;/* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -28,16 +28,8 @@ package ccdd.Test;/* Copyright (c) 2017 FIRST. All rights reserved.
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import ccdd.auto.HardwareStrafeAuto;
-import ccdd.util.AutoEncoder;
-import ccdd.util.AutonomousUtilities;
-import ccdd.util.GyroUtilities;
-import ccdd.util.STATE;
-
+import static ccdd.TeleOp.HardwareStrafe.LEFT_ORIGIN;
 import static ccdd.TeleOp.HardwareStrafe.RIGHT_ORIGIN;
 import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
 
@@ -62,42 +54,33 @@ import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Auto Test", group="Test")
-@Disabled
-public class AutoTest extends LinearOpMode {
+@Autonomous(name="Bridge, Red, Plate", group="Red Bridge")
+//@Disabled
+public class AutoRedPlateMoveBridge extends AutoBasic {
 
-    /* Declare OpMode members. */
-    HardwareStrafeAuto robot   = new HardwareStrafeAuto();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
-
-    private AutonomousUtilities au;
-    private AutoEncoder ae;
-    private GyroUtilities gu;
-    private STATE open = STATE.OPEN;
-    private STATE closed = STATE.CLOSED;
-    private STATE left = STATE.LEFT;
-    private STATE right = STATE.RIGHT;
-    private STATE up = STATE.UP;
-    private STATE down = STATE.DOWN;
 
     @Override
     public void runOpMode() {
 
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        robot.init(hardwareMap);
-        au = new AutonomousUtilities(robot, this, runtime);
-        ae = new AutoEncoder(robot, this, runtime);
-        gu = new GyroUtilities(robot, this, runtime);
+        initAutoBasic();
 
-
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-        ae.encoderDrive(1,1 );
-        au.strafeLeft(.75,1);
-        au.strafeRight(.75,1);
-
+        au.armOut();
+        au.liftTime(1, up, .25);
+        au.strafeTime(.5,90,.75);
+        ae.encoderDrive(.5,40);
+        au.drag();
+        au.pause(.75);
+        ae.encoderDrive(-.75,-15);
+        gu.gyroTurn(1,RIGHT_ORIGIN,2000l);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN,2000l);
+        ae.encoderDrive(1,20);
+        au.noDrag();
+        au.pause(.5);
+        ae.encoderDrive(-.5,-5);
+        au.strafeTime(.75,90,1.5);
+        au.strafeTime(.75,-90,1.6);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
+        ae.encoderDrive(-.5,-45);
     }
 }

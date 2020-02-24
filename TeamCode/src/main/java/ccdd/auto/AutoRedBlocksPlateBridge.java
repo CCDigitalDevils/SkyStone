@@ -31,66 +31,54 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import ccdd.TeleOp.HardwareStrafe;
 import ccdd.util.AutoEncoder;
 import ccdd.util.AutonomousUtilities;
 import ccdd.util.GyroUtilities;
 import ccdd.util.STATE;
 
-/**
- * This file illustrates the concept of driving a path based on time.
- * It uses the common Pushbot hardware class to define the drive on the robot.
- * The code is structured as a LinearOpMode
- *
- * The code assumes that you do NOT have encoders on the wheels,
- *   otherwise you would use: PushbotAutoDriveByEncoder;
- *
- *   The desired path in this example is:
- *   - Drive forward for 3 seconds
- *   - Spin right for 1.3 seconds
- *   - Drive Backwards for 1 Second
- *   - Stop and close the claw.
- *
- *  The code is written in a simple form with no optimizations.
- *  However, there are several ways that this type of sequence could be streamlined,
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
+import static ccdd.TeleOp.HardwareStrafe.LEFT_ORIGIN;
+import static ccdd.TeleOp.HardwareStrafe.ORIGIN;
+import static ccdd.TeleOp.HardwareStrafe.RIGHT_ORIGIN;
+import static ccdd.TeleOp.HardwareStrafe.TURN_SPEED;
 
-@Autonomous(name="Auto Park", group="Either")
+@Autonomous(name="Bridge, Red, Blocks + Plate", group="Red Bridge")
 //@Disabled
-public class AutoPark extends LinearOpMode {
-
-    /* Declare OpMode members. */
-    HardwareStrafe robot   = new HardwareStrafe();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
-
-    private AutonomousUtilities au;
-    private GyroUtilities gu;
-    private AutoEncoder ae;
-    private STATE open = STATE.OPEN;
-    private STATE closed = STATE.CLOSED;
-    private STATE left = STATE.LEFT;
-    private STATE right = STATE.RIGHT;
-    private STATE up = STATE.UP;
-    private STATE down = STATE.DOWN;
+public class AutoRedBlocksPlateBridge extends AutoBasic {
 
     @Override
     public void runOpMode() {
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        robot.init(hardwareMap);
-        au = new AutonomousUtilities(robot, this, runtime);
-        gu = new GyroUtilities(robot, this, runtime);
-        ae = new AutoEncoder(robot,this,runtime);
 
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
+        initAutoBasic();
 
-        au.armOut();
-        au.pause(10);
-}
+        robot.clawServo.setPosition(robot.MID_SERVO);
+        robot.armServo.setPosition(.0);
+
+        ae.encoderDrive(.5,36);
+        au.extClosed();
+        au.pause(.5);
+        au.liftTime(.5, up, .2);
+        ae.encoderDrive(-.5, -1);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
+        ae.encoderDrive(1,95);
+        au.liftTime(1, up, .5);
+        gu.gyroTurn(TURN_SPEED,ORIGIN);
+        gu.gyroTurn(TURN_SPEED,ORIGIN);
+        ae.encoderDrive(.5,9);
+        au.drag();
+        au.extOpen();
+        au.pause(.5);
+        ae.encoderDrive(-1,-20);
+        gu.gyroTurn(1,RIGHT_ORIGIN,2000l);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN,2000l);
+        ae.encoderDrive(1,7);
+        au.noDrag();
+        au.pause(.5);
+        au.strafeTime(.75,100,1.5);
+        au.liftDown();
+        au.strafeTime(.75,-90,1.6);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
+        gu.gyroTurn(TURN_SPEED,RIGHT_ORIGIN);
+        ae.encoderDrive(-.5,-45);
+    }
 }

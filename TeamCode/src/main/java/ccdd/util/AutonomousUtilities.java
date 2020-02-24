@@ -203,7 +203,7 @@ public class AutonomousUtilities {
         Long startTime = System.currentTimeMillis();
         Long duration = 0l;
 
-        while (robot.bottomedSensor.getState() == true && duration < 1000){
+        while (linearOpMode.opModeIsActive() && robot.bottomedSensor.getState() == true && duration < 1000){
             robot.Drive4.setPower(-.5);
             duration = System.currentTimeMillis() - startTime;
         }
@@ -229,6 +229,38 @@ public class AutonomousUtilities {
     public void armOut(){
         robot.armServo.setPosition(0);
         robot.clawServo.setPosition(0);
+    }
+
+    public void hoeIn(){
+        robot.hoe2.setPosition(0);
+        robot.hoe3.setPosition(0);
+        robot.hoe4.setPosition(.5);
+    }
+
+    public void hoeOut(){
+        robot.hoe2.setPosition(.2);
+        robot.hoe3.setPosition(.5);
+        robot.hoe4.setPosition(0);
+    }
+
+    public void hoeRight(){
+        robot.hoe1.setPosition(0);
+    }
+
+    public void hoeMid(){
+        robot.hoe1.setPosition(.34);
+    }
+
+    public void hoeLeft(){
+        robot.hoe1.setPosition(.68);
+    }
+
+    public void hoeOpen(){
+    robot.hoe4.setPosition(0);
+    }
+
+    public void hoeClose(){
+        robot.hoe4.setPosition(.3);
     }
 }
 

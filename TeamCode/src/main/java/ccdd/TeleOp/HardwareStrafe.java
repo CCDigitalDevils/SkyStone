@@ -41,22 +41,6 @@ import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * This is NOT an opmode.
- *
- * This class can be used to define all the specific hardware for a single robot.
- * In this case that robot is a Pushbot.
- * See PushbotTeleopTank_Iterative and others classes starting with "Pushbot" for usage examples.
- *
- * This hardware class assumes the following device names have been configured on the robot:
- * Note:  All names are lower case and some have single spaces between words.
- *
- * Motor channel:  Left  drive motor:        "left_drive"
- * Motor channel:  Right drive motor:        "right_drive"
- * Motor channel:  Manipulator drive motor:  "left_arm"
- * Servo channel:  Servo to open left claw:  "left_hand"
- * Servo channel:  Servo to open right claw: "right_hand"
- */
 public class HardwareStrafe
 {
     /* Public OpMode members. */
@@ -70,6 +54,10 @@ public class HardwareStrafe
     public Servo dragServo1 = null;
     public Servo dragServo2 = null;
     public Servo flipServo = null;
+    public Servo hoe1 = null;
+    public Servo hoe2 = null;
+    public Servo hoe3 = null;
+    public Servo hoe4 = null;
     public Servo cap = null;
     public CRServo tape = null;
     public DigitalChannel bottomedSensor = null;
@@ -109,7 +97,6 @@ public class HardwareStrafe
         Drive4 = hwMap.get(DcMotor.class, "drive4");
         bottomedSensor = hwMap.get(DigitalChannel.class, "touch0-1");
         maxxedSensor = hwMap.get(DigitalChannel.class, "touch2-3");
-        colorSensor = hwMap.get(RevColorSensorV3.class,"I2C-0");
         Drive0.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         Drive1.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         Drive2.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
@@ -154,17 +141,29 @@ public class HardwareStrafe
         cap = hwMap.get(Servo.class, "servo1-5");
         dragServo1 = hwMap.get(Servo.class, "servo2-3");
         dragServo2 = hwMap.get(Servo.class,"servo2-4");
+        hoe1 = hwMap.get(Servo.class,"servo2-0");
+        hoe2 = hwMap.get(Servo.class,"servo2-1");
+        hoe3 = hwMap.get(Servo.class,"servo2-2");
+        hoe4 = hwMap.get(Servo.class,"servo1-2");
+
 
         tape = hwMap.get(CRServo.class, "servo2-5");
 
         dragServo1.setDirection(Servo.Direction.REVERSE);
+        hoe3.setDirection(Servo.Direction.REVERSE);
+        hoe4.setDirection(Servo.Direction.REVERSE);
 
         clawServo.setPosition(SERVO_CLOSED);
         armServo.setPosition(.33);
         dragServo1.setPosition(.0);
         dragServo2.setPosition(.0);
         flipServo.setPosition(1);
-        cap.setPosition(.3);
+        cap.setPosition(.25);
+        hoe1.setPosition(0);
+        hoe2.setPosition(0);
+        hoe3.setPosition(0);
+        hoe4.setPosition(0);
+
     }
  }
 
